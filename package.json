@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "ts-node": "^10.9.1",
     "typescript": "^5.3.2"
   },
   "name": "f1-elo",
@@ -7,7 +8,8 @@
   "description": "A simple F1 ELO system",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tabulate:gp": "ts-node src/tabulate/gp.ts"
   },
   "repository": {
     "type": "git",
