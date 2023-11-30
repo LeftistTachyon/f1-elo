@@ -1,0 +1,26 @@
+{
+  "devDependencies": {
+    "typescript": "^5.3.2"
+  },
+  "name": "f1-elo",
+  "version": "1.0.0",
+  "description": "A simple F1 ELO system",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeftistTachyon/f1-elo.git"
+  },
+  "keywords": [
+    "F1",
+    "ELO"
+  ],
+  "author": "Jed Wang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LeftistTachyon/f1-elo/issues"
+  },
+  "homepage": "https://github.com/LeftistTachyon/f1-elo#readme"
+}
