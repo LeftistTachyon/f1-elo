@@ -9,7 +9,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tabulate:gp": "ts-node src/tabulate/gp.ts"
+    "tabulate:gp": "ts-node src/tabulate/gp.ts",
+    "tabulate:statuses": "ts-node src/tabulate/statuses.ts"
   },
   "repository": {
     "type": "git",
