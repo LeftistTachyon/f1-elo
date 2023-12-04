@@ -13,7 +13,10 @@
     "tabulate:statuses": "ts-node src/tabulate/statuses.ts",
     "tabulate:data": "ts-node src/tabulate/data.ts",
     "calculate:one": "ts-node src/calculate/one.ts",
-    "calculate:normalize": "ts-node src/calculate/normalize.ts"
+    "calculate:one-v2": "ts-node src/calculate/one-v2.ts",
+    "calculate:all": "ts-node src/calculate/all.ts",
+    "calculate:normalize": "ts-node src/calculate/normalize.ts",
+    "calculate:top": "ts-node src/calculate/top.ts"
   },
   "repository": {
     "type": "git",

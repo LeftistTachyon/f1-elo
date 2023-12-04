@@ -192,6 +192,7 @@ const players: Player[] = race.results.map((res) => {
     constructorElos[res.constructor] ??
     (constructorElos[res.constructor] = STARTING_ELO);
   const elo = driverElo * DRIVER_RATIO + constructorElo * CONSTRUCTOR_RATIO;
+
   const q = 10 ** (elo / 400);
   const actual = (max - res.position) / max;
   return { elo, q, actual, driver: res.driver, constructor: res.constructor };
