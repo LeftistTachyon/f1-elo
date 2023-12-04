@@ -16,7 +16,8 @@
     "calculate:one-v2": "ts-node src/calculate/one-v2.ts",
     "calculate:all": "ts-node src/calculate/all.ts",
     "calculate:normalize": "ts-node src/calculate/normalize.ts",
-    "calculate:top": "ts-node src/calculate/top.ts"
+    "calculate:top": "ts-node src/calculate/top.ts",
+    "conv-csv": "ts-node src/conv-csv.ts"
   },
   "repository": {
     "type": "git",
@@ -31,5 +32,8 @@
   "bugs": {
     "url": "https://github.com/LeftistTachyon/f1-elo/issues"
   },
-  "homepage": "https://github.com/LeftistTachyon/f1-elo#readme"
+  "homepage": "https://github.com/LeftistTachyon/f1-elo#readme",
+  "dependencies": {
+    "csv": "^6.3.5"
+  }
 }
