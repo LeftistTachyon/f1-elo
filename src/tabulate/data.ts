@@ -35,7 +35,9 @@ async function runDataTabulation() {
     const data = (await resp.json()).MRData;
     if (data.total == 1000) throw data.total;
 
-    const table = data.RaceTable.Races;
+    const table = data.RaceTable.Races.filter(
+      (r: { raceName: string }) => r.raceName !== "Indianapolis 500"
+    );
     const yearResults: Race[] = table.map(
       (race: YearDataIn): Race => ({
         round: Number(race.round),
