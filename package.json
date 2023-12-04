@@ -11,7 +11,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tabulate:gp": "ts-node src/tabulate/gp.ts",
     "tabulate:statuses": "ts-node src/tabulate/statuses.ts",
-    "tabulate:data": "ts-node src/tabulate/data.ts"
+    "tabulate:data": "ts-node src/tabulate/data.ts",
+    "calculate:one": "ts-node src/calculate/one.ts",
+    "calculate:normalize": "ts-node src/calculate/normalize.ts"
   },
   "repository": {
     "type": "git",

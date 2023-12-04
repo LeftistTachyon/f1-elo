@@ -1,16 +1,5 @@
 import { writeFile } from "fs/promises";
-
-type Result = {
-  position: number;
-  positionText: string;
-  driver: string;
-  constructor: string;
-  status: string;
-};
-type Race = {
-  round: number;
-  results: Result[];
-};
+import type { Race, Result } from "../types";
 
 type YearDataIn = {
   round: string;
