@@ -10,7 +10,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tabulate:gp": "ts-node src/tabulate/gp.ts",
-    "tabulate:statuses": "ts-node src/tabulate/statuses.ts"
+    "tabulate:statuses": "ts-node src/tabulate/statuses.ts",
+    "tabulate:data": "ts-node src/tabulate/data.ts"
   },
   "repository": {
     "type": "git",
