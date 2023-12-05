@@ -44,9 +44,3 @@ export function doStep(results: Result[]) {
     constructorElos[results[i].constructor] += adj * CONSTRUCTOR_RATIO;
   }
 }
-
-// doStep(race.results);
-
-// console.log(players);
-console.log(constructorElos);
-console.log(driverElos);

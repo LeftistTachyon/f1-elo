@@ -16,8 +16,10 @@ for (const [year, races] of Object.entries(data)) {
   console.log("Completed", year);
 }
 
+process.stdout.write("writing files... ");
 writeFileSync(
   "constructor-elos.json",
   JSON.stringify(constructorOutput, null, 2)
 );
 writeFileSync("driver-elos.json", JSON.stringify(driverOutput, null, 2));
+process.stdout.write("done\n");

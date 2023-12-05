@@ -1,9 +1,10 @@
+process.stdout.write("loading json... ");
 import { stringify } from "csv-stringify/sync";
 import c from "../constructor-elos.json";
 import d from "../driver-elos.json";
 import { writeFileSync } from "fs";
+process.stdout.write("done\n");
 
-console.log(process.argv);
 const isConstructor = process.argv[2]?.toLowerCase() === "true";
 const results = (isConstructor ? c : d) as Record<string, number>[];
 const col = new Set<string>();
@@ -21,8 +22,10 @@ for (const constructor of Object.keys(latest)) {
 }
 process.stdout.write("done\n");
 
+process.stdout.write("writing file... ");
 const columns = Array.from(col);
 writeFileSync(
   isConstructor ? "constructors.csv" : "drivers.csv",
   stringify(results, { header: true, columns })
 );
+process.stdout.write("done\n");
