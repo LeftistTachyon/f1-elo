@@ -3,6 +3,7 @@ import type { Race, Result } from "../types";
 
 type YearDataIn = {
   round: string;
+  date: string;
   Results: {
     position: string;
     positionText: string;
@@ -30,6 +31,7 @@ async function runDataTabulation() {
     const yearResults: Race[] = table.map(
       (race: YearDataIn): Race => ({
         round: Number(race.round),
+        date: new Date(race.date),
         results: race.Results.map(
           (result): Result => ({
             position: Number(result.position),

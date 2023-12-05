@@ -7,5 +7,6 @@ export type Result = {
 };
 export type Race = {
   round: number;
+  date: Date;
   results: Result[];
 };
