@@ -1,11 +1,14 @@
 import { stringify } from "csv-stringify/sync";
-import r from "../constructor-elos.json";
+import c from "../constructor-elos.json";
+import d from "../driver-elos.json";
 import { writeFileSync } from "fs";
 
-const results = r as Record<string, number>[];
-const c = new Set<string>();
+console.log(process.argv);
+const isConstructor = process.argv[2]?.toLowerCase() === "true";
+const results = (isConstructor ? c : d) as Record<string, number>[];
+const col = new Set<string>();
 for (const result of results)
-  for (const driver of Object.keys(result)) c.add(driver);
+  for (const driver of Object.keys(result)) col.add(driver);
 
 process.stdout.write("cleaning... ");
 const latest = results[results.length - 1];
@@ -18,8 +21,8 @@ for (const constructor of Object.keys(latest)) {
 }
 process.stdout.write("done\n");
 
-const columns = Array.from(c);
+const columns = Array.from(col);
 writeFileSync(
-  "constructors.csv",
+  isConstructor ? "constructors.csv" : "drivers.csv",
   stringify(results, { header: true, columns })
 );

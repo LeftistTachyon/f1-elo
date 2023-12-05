@@ -8,6 +8,7 @@
   "description": "A simple F1 ELO system",
   "main": "index.ts",
   "scripts": {
+    "start": "npm run calculate:all && npm run conv-csv true && npm run conv-csv false && npm run tabulate:good-drivers && npm run calculate:peak",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tabulate:gp": "ts-node src/tabulate/gp.ts",
     "tabulate:statuses": "ts-node src/tabulate/statuses.ts",
@@ -18,6 +19,7 @@
     "calculate:all": "ts-node src/calculate/all.ts",
     "calculate:normalize": "ts-node src/calculate/normalize.ts",
     "calculate:top": "ts-node src/calculate/top.ts",
+    "calculate:peak": "ts-node src/calculate/peak.ts",
     "conv-csv": "ts-node src/conv-csv.ts"
   },
   "repository": {
