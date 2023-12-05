@@ -3,7 +3,7 @@ import c from "../constructor-elos.json";
 import d from "../driver-elos.json";
 import { writeFileSync } from "fs";
 
-console.log(process.argv);
+// console.log(process.argv);
 const isConstructor = process.argv[2]?.toLowerCase() === "true";
 const results = (isConstructor ? c : d) as Record<string, number>[];
 const col = new Set<string>();
