@@ -1,7 +1,7 @@
 import { Result } from "../types";
 
 const STARTING_ELO = 2000;
-const DRIVER_RATIO = 0.6,
+const DRIVER_RATIO = 0.1,
   CONSTRUCTOR_RATIO = 1 - DRIVER_RATIO;
 
 export const driverElos: Record<string, number> = {},
