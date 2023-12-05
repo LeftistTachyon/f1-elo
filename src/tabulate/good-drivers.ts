@@ -13,7 +13,7 @@ process.stdout.write("done\n");
 
 for (const record of drivers) {
   for (const [driver, elo] of Object.entries(record)) {
-    if (elo >= 2020) columns.add(driver);
+    if (elo >= 2060) columns.add(driver);
   }
 }
 

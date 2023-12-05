@@ -40,7 +40,7 @@ export function doStep(results: Result[]) {
     const actual = (maxPosition - results[i].position) / maxPosition;
 
     const adj = 32 * (actual - expected);
-    driverElos[results[i].driver] += adj * DRIVER_RATIO;
-    constructorElos[results[i].constructor] += adj * CONSTRUCTOR_RATIO;
+    driverElos[results[i].driver] += adj;
+    constructorElos[results[i].constructor] += adj;
   }
 }
