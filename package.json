@@ -12,6 +12,7 @@
     "tabulate:gp": "ts-node src/tabulate/gp.ts",
     "tabulate:statuses": "ts-node src/tabulate/statuses.ts",
     "tabulate:data": "ts-node src/tabulate/data.ts",
+    "tabulate:good-drivers": "ts-node src/tabulate/good-drivers.ts",
     "calculate:one": "ts-node src/calculate/one.ts",
     "calculate:one-v2": "ts-node src/calculate/one-v2.ts",
     "calculate:all": "ts-node src/calculate/all.ts",
