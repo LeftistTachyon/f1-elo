@@ -1,5 +1,5 @@
 import { stringify } from "csv-stringify/sync";
-import r from "../driver-elos.json";
+import r from "../constructor-elos.json";
 import { writeFileSync } from "fs";
 
 const results = r as Record<string, number>[];
@@ -19,4 +19,7 @@ for (const constructor of Object.keys(latest)) {
 process.stdout.write("done\n");
 
 const columns = Array.from(c);
-writeFileSync("drivers.csv", stringify(results, { header: true, columns }));
+writeFileSync(
+  "constructors.csv",
+  stringify(results, { header: true, columns })
+);

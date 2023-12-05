@@ -31,7 +31,7 @@ async function runDataTabulation() {
     const yearResults: Race[] = table.map(
       (race: YearDataIn): Race => ({
         round: Number(race.round),
-        date: new Date(race.date),
+        date: race.date,
         results: race.Results.map(
           (result): Result => ({
             position: Number(result.position),

@@ -7,6 +7,6 @@ export type Result = {
 };
 export type Race = {
   round: number;
-  date: Date;
+  date: string;
   results: Result[];
 };
