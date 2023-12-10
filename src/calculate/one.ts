@@ -1,17 +1,23 @@
 import { Race } from "../types";
 
 type Player = {
-  elo: number;
-  q: number;
+  driverElo: number;
+  constructorElo: number;
+  qD: number;
+  qC: number;
   expected?: number;
+  expectedD?: number;
+  expectedC?: number;
   actual: number;
-  adj?: number;
+  adjD?: number;
+  adjC?: number;
   driver: string;
   constructor: string;
 };
 
 const race: Race = {
   round: 1,
+  date: "1950",
   results: [
     {
       position: 0,
@@ -178,7 +184,7 @@ const race: Race = {
 };
 
 const STARTING_ELO = 2000;
-const DRIVER_RATIO = 0.6,
+const DRIVER_RATIO = 0.81,
   CONSTRUCTOR_RATIO = 1 - DRIVER_RATIO;
 
 const driverElos: Record<string, number> = {},
@@ -191,30 +197,64 @@ const players: Player[] = race.results.map((res) => {
   const constructorElo =
     constructorElos[res.constructor] ??
     (constructorElos[res.constructor] = STARTING_ELO);
-  const elo = driverElo * DRIVER_RATIO + constructorElo * CONSTRUCTOR_RATIO;
+  // const elo = driverElo * DRIVER_RATIO + constructorElo * CONSTRUCTOR_RATIO;
 
-  const q = 10 ** (elo / 400);
+  const qD = 10 ** (driverElo / 400),
+    qC = 10 ** (constructorElo / 400);
   const actual = (max - res.position) / max;
-  return { elo, q, actual, driver: res.driver, constructor: res.constructor };
+  return {
+    driverElo,
+    constructorElo,
+    qD,
+    qC,
+    actual,
+    driver: res.driver,
+    constructor: res.constructor,
+  };
 });
 
 for (let i = 0; i < players.length; i++) {
-  let otherQs = 0;
+  const { qD, qC, actual, driver, constructor } = players[i];
+  let expectedD = 0,
+    expectedC = 0;
   for (let j = 0; j < players.length; j++) {
     if (i == j) continue;
-    otherQs += players[j].q;
+    const { qD: qDO, qC: qCO } = players[j];
+    expectedD += DRIVER_RATIO / (qD + qDO) + CONSTRUCTOR_RATIO / (qD + qCO);
+    expectedC += DRIVER_RATIO / (qC + qDO) + CONSTRUCTOR_RATIO / (qC + qCO);
   }
+  players[i].expectedD = expectedD *= qD / (players.length - 1);
+  players[i].expectedC = expectedC *= qC / (players.length - 1);
 
-  const self = (players.length - 1) * players[i].q;
-  const expected = self / (self + otherQs);
-  players[i].expected = expected;
+  const expectedT = DRIVER_RATIO * expectedD + CONSTRUCTOR_RATIO * expectedC;
+  players[i].expected = expectedT;
 
-  const adj = 32 * (players[i].actual - expected);
-  players[i].adj = adj;
+  const adjC = 32 * (actual - expectedC);
+  players[i].adjC = adjC;
+  const adjD = 32 * (actual - expectedD);
+  players[i].adjD = adjD;
 
-  driverElos[players[i].driver] += adj / DRIVER_RATIO;
-  constructorElos[players[i].constructor] += adj / CONSTRUCTOR_RATIO;
+  driverElos[driver] += adjD;
+  constructorElos[constructor] += adjC;
 }
+
+// for (let i = 0; i < players.length; i++) {
+//   let otherQs = 0;
+//   for (let j = 0; j < players.length; j++) {
+//     if (i == j) continue;
+//     otherQs += players[j].q;
+//   }
+
+//   const self = (players.length - 1) * players[i].q;
+//   const expected = self / (self + otherQs);
+//   players[i].expected = expected;
+
+//   const adj = 32 * (players[i].actual - expected);
+//   players[i].adj = adj;
+
+//   driverElos[players[i].driver] += adj / DRIVER_RATIO;
+//   constructorElos[players[i].constructor] += adj / CONSTRUCTOR_RATIO;
+// }
 
 console.log(players);
 console.log(constructorElos);

@@ -8,7 +8,8 @@ export const driverElos: Record<string, number> = {},
   constructorElos: Record<string, number> = {};
 
 export function doStep(results: Result[]) {
-  const q = new Array<number>(results.length);
+  const qC = new Array<number>(results.length),
+    qD = new Array<number>(results.length);
   let maxPosition = 0;
   for (let i = 0; i < results.length; i++) {
     const res = results[i];
@@ -20,27 +21,30 @@ export function doStep(results: Result[]) {
       constructorElos[res.constructor] ??
       (constructorElos[res.constructor] = STARTING_ELO);
 
-    // calculating Q
-    const elo = driverElo * DRIVER_RATIO + constructorElo * CONSTRUCTOR_RATIO;
-    q[i] = 10 ** (elo / 400);
+    // calculating Qs
+    qC[i] = 10 ** (constructorElo / 400);
+    qD[i] = 10 ** (driverElo / 400);
 
     // finding max position
     if (res.position > maxPosition) maxPosition = res.position;
   }
 
   for (let i = 0; i < results.length; i++) {
-    let otherQs = 0;
+    let expectedD = 0,
+      expectedC = 0;
     for (let j = 0; j < results.length; j++) {
       if (i == j) continue;
-      otherQs += q[j];
+      expectedD +=
+        DRIVER_RATIO / (qD[i] + qD[j]) + CONSTRUCTOR_RATIO / (qD[i] + qC[j]);
+      expectedC +=
+        DRIVER_RATIO / (qC[i] + qD[j]) + CONSTRUCTOR_RATIO / (qC[i] + qC[j]);
     }
+    expectedD *= qD[i] / (results.length - 1);
+    expectedC *= qC[i] / (results.length - 1);
 
-    const self = (results.length - 1) * q[i];
-    const expected = self / (self + otherQs);
     const actual = (maxPosition - results[i].position) / maxPosition;
 
-    const adj = 32 * (actual - expected);
-    driverElos[results[i].driver] += adj * DRIVER_RATIO;
-    constructorElos[results[i].constructor] += adj * CONSTRUCTOR_RATIO;
+    constructorElos[results[i].constructor] += 32 * (actual - expectedC);
+    driverElos[results[i].driver] += 32 * (actual - expectedD);
   }
 }
