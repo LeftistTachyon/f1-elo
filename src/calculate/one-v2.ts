@@ -1,4 +1,6 @@
 import { Result } from "../types";
+import s from "../statuses.json";
+const statuses = s as Record<string, { driver: number; constructor: number }>;
 
 const STARTING_ELO = 2000;
 const DRIVER_RATIO = 0.6,
@@ -44,7 +46,10 @@ export function doStep(results: Result[]) {
 
     const actual = (maxPosition - results[i].position) / maxPosition;
 
-    constructorElos[results[i].constructor] += 16 * (actual - expectedC);
-    driverElos[results[i].driver] += 16 * (actual - expectedD);
+    const { driver: driverMult, constructor: constructorMult } =
+      statuses[results[i].status];
+    constructorElos[results[i].constructor] +=
+      16 * constructorMult * (actual - expectedC);
+    driverElos[results[i].driver] += 16 * driverMult * (actual - expectedD);
   }
 }

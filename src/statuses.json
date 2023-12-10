@@ -96,7 +96,7 @@
   "Hydraulics": { "driver": 0, "constructor": 1 },
   "Fire": { "driver": 0, "constructor": 1 },
   "Safety belt": { "driver": 0, "constructor": 1 },
-  "107% Rule": { "driver": 0, "constructor": 1 },
+  "107% Rule": { "driver": 1, "constructor": 1 },
   "Fuel": { "driver": 0, "constructor": 1 },
   "Underweight": { "driver": 0, "constructor": 1 },
   "Rear wing": { "driver": 0, "constructor": 1 },
