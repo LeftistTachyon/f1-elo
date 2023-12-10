@@ -22,8 +22,8 @@ export function doStep(results: Result[]) {
       (constructorElos[res.constructor] = STARTING_ELO);
 
     // calculating Qs
-    qC[i] = 10 ** (constructorElo / 400);
-    qD[i] = 10 ** (driverElo / 400);
+    qC[i] = 10 ** (constructorElo / 600);
+    qD[i] = 10 ** (driverElo / 600);
 
     // finding max position
     if (res.position > maxPosition) maxPosition = res.position;
@@ -44,7 +44,7 @@ export function doStep(results: Result[]) {
 
     const actual = (maxPosition - results[i].position) / maxPosition;
 
-    constructorElos[results[i].constructor] += 32 * (actual - expectedC);
-    driverElos[results[i].driver] += 32 * (actual - expectedD);
+    constructorElos[results[i].constructor] += 16 * (actual - expectedC);
+    driverElos[results[i].driver] += 16 * (actual - expectedD);
   }
 }
