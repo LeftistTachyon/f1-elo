@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@types/color-hash": "^1.0.5",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2"
   },
@@ -20,6 +21,7 @@
     "calculate:normalize": "ts-node src/calculate/normalize.ts",
     "calculate:top": "ts-node src/calculate/top.ts",
     "calculate:peak": "ts-node src/calculate/peak.ts",
+    "draw:chart": "ts-node src/draw/chart.ts",
     "conv-csv": "ts-node src/conv-csv.ts"
   },
   "repository": {
@@ -37,6 +39,11 @@
   },
   "homepage": "https://github.com/LeftistTachyon/f1-elo#readme",
   "dependencies": {
-    "csv": "^6.3.5"
+    "chart.js": "^3.9.1",
+    "chartjs-adapter-moment": "^1.0.1",
+    "chartjs-node-canvas": "^4.1.6",
+    "color-hash": "^2.0.2",
+    "csv": "^6.3.5",
+    "moment": "^2.29.4"
   }
 }
