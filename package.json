@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "start": "npm run calculate:all && npm run conv-csv true && npm run conv-csv false && npm run tabulate:good-drivers && npm run calculate:peak",
+    "start:gif": "npm run draw:frames && npm run draw:gif",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tabulate:gp": "ts-node src/tabulate/gp.ts",
     "tabulate:statuses": "ts-node src/tabulate/statuses.ts",
@@ -16,6 +17,7 @@
     "calculate:normalize": "ts-node src/calculate/normalize.ts",
     "calculate:top": "ts-node src/calculate/top.ts",
     "calculate:peak": "ts-node src/calculate/peak.ts",
+    "calculate:dominance": "ts-node src/calculate/dominance.ts",
     "draw:chart": "ts-node src/draw/chart.ts",
     "draw:frames": "ts-node src/draw/frames.ts",
     "draw:gif": "ts-node src/draw/gif.ts",

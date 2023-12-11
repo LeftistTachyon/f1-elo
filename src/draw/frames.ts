@@ -3,7 +3,8 @@ import { readFileSync } from "fs";
 import { drawChart } from "./chart";
 
 process.stdout.write("reading file... ");
-const driverFile = readFileSync("good-drivers.csv");
+// const driverFile = readFileSync("good-drivers.csv");
+const driverFile = readFileSync("constructors.csv");
 const drivers: Record<string, number>[] = parse(driverFile, {
   columns: true,
   bom: true,
