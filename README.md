@@ -10,3 +10,7 @@ As of the time of writing (December 10th, 2023), these are the following ranking
 
 If you want to see historical ratings, here you go (it's kinda shaky, MB):  
 ![Historical rating animation of Formula One drivers.](https://github.com/LeftistTachyon/f1-elo/blob/master/ratings.gif)
+
+(There are equivalent versions for the constructors, but I'm too bothered to try to show them here.)
+
+Comparatively, Lewis Hamilton seems to have the highest Elo gap ever (235.2, equating to a 71.2% "win rate" or placing on average 6th in a field of 20 competitors), followed by Michael Schumacher (192.4) and Juan Manuel Fangio (123.2). However, Max Verstappen seems to be quickly closing in on Hamilton's historic lead with his recent streak.
