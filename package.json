@@ -18,6 +18,7 @@
     "calculate:peak": "ts-node src/calculate/peak.ts",
     "draw:chart": "ts-node src/draw/chart.ts",
     "draw:frames": "ts-node src/draw/frames.ts",
+    "draw:gif": "ts-node src/draw/gif.ts",
     "conv-csv": "ts-node src/conv-csv.ts"
   },
   "repository": {
@@ -41,6 +42,7 @@
     "chartjs-node-canvas": "^4.1.6",
     "color-hash": "^2.0.2",
     "csv": "^6.3.5",
+    "gif-encoder-2": "^1.0.5",
     "luxon": "^3.4.4"
   },
   "devDependencies": {
