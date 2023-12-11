@@ -15,14 +15,18 @@ const colorHash = new ColorHash();
 
 type ChartInput = {
   dates: string[];
-  sets: Record<string, number[]>;
+  sets: Record<string, (number | null)[]>;
 };
 
-async function run(input: ChartInput, fileDestination = "out.png") {
+export async function drawChart(
+  input: ChartInput,
+  fileDestination = "out.png"
+) {
   const dataUrl = await chartJSNodeCanvas.renderToDataURL({
     type: "line",
     data: {
-      labels: input.dates.map((date) => DateTime.fromFormat(date, "D")),
+      // labels: input.dates.map((date) => DateTime.fromFormat(date, "d/M/y")),
+      labels: input.dates,
       datasets: Object.entries(input.sets).map(([label, data]) => ({
         label,
         data,
@@ -36,7 +40,14 @@ async function run(input: ChartInput, fileDestination = "out.png") {
           type: "time",
           time: {
             unit: "day",
+            stepSize: 1,
+            displayFormats: {
+              day: "d MMM yyyy",
+            },
+            parser: "d/M/y",
           },
+          min: input.dates[0],
+          max: input.dates[input.dates.length - 1],
         },
       },
     },
@@ -66,16 +77,17 @@ if (require.main === module) {
     .sort((r1, r2) => Number(r2[1]) - Number(r1[1]))
     .slice(0, 10)
     .map((r) => r[0]);
-  const sets: Record<string, number[]> = {};
+  const sets: Record<string, (number | null)[]> = {};
   for (const record of lastFew) {
     for (const guy of best) {
-      if (sets[guy]) sets[guy].push(record[guy]);
-      else sets[guy] = [record[guy]];
+      const val = Number(record[guy]) || null;
+      if (sets[guy]) sets[guy].push(val);
+      else sets[guy] = [val];
     }
   }
   process.stdout.write("done\n");
   // console.log({ last10, best, sets });
 
   process.stdout.write("drawing graph... ");
-  run({ dates, sets }).then(() => process.stdout.write("done\n"));
+  drawChart({ dates, sets }).then(() => process.stdout.write("done\n"));
 }

@@ -17,6 +17,7 @@
     "calculate:top": "ts-node src/calculate/top.ts",
     "calculate:peak": "ts-node src/calculate/peak.ts",
     "draw:chart": "ts-node src/draw/chart.ts",
+    "draw:frames": "ts-node src/draw/frames.ts",
     "conv-csv": "ts-node src/conv-csv.ts"
   },
   "repository": {
