@@ -14,7 +14,7 @@ async function drawFrames() {
   const chars = Math.ceil(Math.log10(drivers.length)),
     pad0 = "0".repeat(chars);
   console.log(`TODO: ${drivers.length} frames`);
-  for (let i = 60; i < 61; i++) {
+  for (let i = 1; i < drivers.length; i++) {
     const index = (pad0 + i).slice(-chars);
 
     process.stdout.write(`rendering frame #${index}... `);
