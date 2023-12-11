@@ -3,7 +3,6 @@ import ColorHash from "color-hash";
 import { parse } from "csv-parse/sync";
 import { readFileSync } from "fs";
 import { writeFile } from "fs/promises";
-import { DateTime } from "luxon";
 import "./chartjs-adapter-luxon.umd.min.js";
 
 const chartJSNodeCanvas = new ChartJSNodeCanvas({
@@ -39,16 +38,20 @@ export async function drawChart(
         x: {
           type: "time",
           time: {
-            unit: "day",
-            stepSize: 1,
-            displayFormats: {
-              day: "d MMM yyyy",
-            },
+            // unit: "day",
+            // stepSize: 1,
+            // displayFormats: {
+            //   day: "d MMM yyyy",
+            // },
             parser: "d/M/y",
           },
-          min: input.dates[0],
-          max: input.dates[input.dates.length - 1],
+          // min: DateTime.fromFormat(input.dates[0], "d/M/y").toMillis(),
+          // max: DateTime.fromFormat(
+          //   input.dates[input.dates.length - 1],
+          //   "d/M/y"
+          // ).toMillis(),
         },
+        y: { suggestedMin: 2000 },
       },
     },
   });
