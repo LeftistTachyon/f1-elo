@@ -1,79 +1,81 @@
-import { writeFile } from "fs/promises";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
-import { Chart, LineController } from "chart.js";
 import ColorHash from "color-hash";
+import { parse } from "csv-parse/sync";
+import { readFileSync } from "fs";
+import { writeFile } from "fs/promises";
+import { DateTime } from "luxon";
+import "./chartjs-adapter-luxon.umd.min.js";
 
 const chartJSNodeCanvas = new ChartJSNodeCanvas({
-  width: 800,
+  width: 400,
   height: 400,
   backgroundColour: "white", // Uses https://www.w3schools.com/tags/canvas_fillstyle.asp
 });
 const colorHash = new ColorHash();
 
-class FormulaChart extends LineController {
-  draw() {
-    super.draw();
-    drawLabels(this);
-  }
-}
-FormulaChart.id = "formula-chart";
-FormulaChart.defaults = LineController.defaults;
+type ChartInput = {
+  dates: string[];
+  sets: Record<string, number[]>;
+};
 
-function drawLabels(t: FormulaChart) {
-  const ctx = t.chart.ctx;
-
-  // ctx.save();
-  ctx.fillStyle = "black";
-  ctx.textBaseline = "middle";
-
-  const chartInstance = t.chart;
-  const datasets = chartInstance.config.data.datasets;
-  datasets.forEach((ds, index) => {
-    const label = ds.label ?? "";
-    const meta = chartInstance.getDatasetMeta(index);
-    const len = meta.data.length - 1;
-    // console.log(ds, meta.data[len]);
-    const xOffset = meta.data[len].x;
-    const yOffset = meta.data[len].y;
-    ctx.fillText(label, xOffset, yOffset);
-  });
-  // ctx.restore();
-}
-
-Chart.register(FormulaChart);
-
-async function run() {
+async function run(input: ChartInput, fileDestination = "out.png") {
   const dataUrl = await chartJSNodeCanvas.renderToDataURL({
-    // @ts-expect-error
-    type: "formula-chart",
+    type: "line",
     data: {
-      labels: [2018, 2019, 2020, 2021],
-      datasets: [
-        {
-          label: "Sample 1",
-          data: [10, 15, -20, 15],
-          borderColor: colorHash.hex("Sample 1"),
-          pointRadius: 0,
-        },
-        {
-          label: "Sample 2",
-          data: [10, null, 20, 10],
-          borderColor: colorHash.hex("Sample 2"),
-          pointRadius: 0,
-        },
-      ],
+      labels: input.dates.map((date) => DateTime.fromFormat(date, "D")),
+      datasets: Object.entries(input.sets).map(([label, data]) => ({
+        label,
+        data,
+        borderColor: colorHash.hex(label),
+        pointRadius: 0,
+      })),
     },
     options: {
-      plugins: { legend: { display: false } },
       scales: {
-        y: {
-          suggestedMin: 0,
+        x: {
+          type: "time",
+          time: {
+            unit: "day",
+          },
         },
       },
     },
   });
 
   const base64Data = dataUrl.replace(/^data:image\/png;base64,/, "");
-  await writeFile("out.png", base64Data, "base64");
+  await writeFile(fileDestination, base64Data, "base64");
 }
-run();
+
+if (require.main === module) {
+  process.stdout.write("reading file... ");
+  const driverFile = readFileSync("good-drivers.csv");
+  const drivers: Record<string, number>[] = parse(driverFile, {
+    columns: true,
+    bom: true,
+  });
+  process.stdout.write("done\n");
+
+  process.stdout.write("calculating... ");
+  const lastFew = drivers.slice(-25);
+  const dates = lastFew.map((r) => r.date as unknown as string);
+
+  const last = lastFew[lastFew.length - 1];
+  delete last.date;
+  const best = Object.entries(last)
+    .filter((r) => r[1])
+    .sort((r1, r2) => Number(r2[1]) - Number(r1[1]))
+    .slice(0, 10)
+    .map((r) => r[0]);
+  const sets: Record<string, number[]> = {};
+  for (const record of lastFew) {
+    for (const guy of best) {
+      if (sets[guy]) sets[guy].push(record[guy]);
+      else sets[guy] = [record[guy]];
+    }
+  }
+  process.stdout.write("done\n");
+  // console.log({ last10, best, sets });
+
+  process.stdout.write("drawing graph... ");
+  run({ dates, sets }).then(() => process.stdout.write("done\n"));
+}
